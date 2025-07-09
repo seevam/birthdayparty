@@ -1,9 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🎉 EPIC BIRTHDAY BASH ALERT! 🎉</title>
+    <title>🎉 IT'S MY BIRTHDAY! 🎉</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Fredoka+One:wght@400&family=Poppins:wght@300;400;600;700&display=swap');
         
@@ -579,6 +580,40 @@
             z-index: -1;
         }
         
+        @keyframes messageSlide {
+            from { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+        
+        @keyframes screenShake {
+            0%, 100% { transform: translateX(0); }
+            10% { transform: translateX(-10px) rotate(1deg); }
+            20% { transform: translateX(10px) rotate(-1deg); }
+            30% { transform: translateX(-10px) rotate(1deg); }
+            40% { transform: translateX(10px) rotate(-1deg); }
+            50% { transform: translateX(-10px) rotate(1deg); }
+            60% { transform: translateX(10px) rotate(-1deg); }
+            70% { transform: translateX(-10px) rotate(1deg); }
+            80% { transform: translateX(10px) rotate(-1deg); }
+            90% { transform: translateX(-10px) rotate(1deg); }
+        }
+        
+        @keyframes soundBounce {
+            0% { transform: scale(0) rotate(0deg); opacity: 1; }
+            50% { transform: scale(1.5) rotate(180deg); opacity: 1; }
+            100% { transform: scale(0) rotate(360deg); opacity: 0; }
+        }
+        
+        @keyframes popupEntry {
+            0% { transform: translate(-50%, -50%) scale(0) rotate(180deg); }
+            100% { transform: translate(-50%, -50%) scale(1) rotate(0deg); }
+        }
+        
+        @keyframes popupExit {
+            0% { transform: translate(-50%, -50%) scale(1) rotate(0deg); opacity: 1; }
+            100% { transform: translate(-50%, -50%) scale(0) rotate(-180deg); opacity: 0; }
+        }
+        
         @media (max-width: 480px) {
             .party-container {
                 width: 100%;
@@ -614,6 +649,7 @@
     </style>
 </head>
 <body>
+    <!-- ===== YOUR PHOTOS FROM GITHUB ===== -->
     <div class="photo-background" id="photo1">
         <img src="./assets/images/photo1.jpg" alt="Party Photo 1">
     </div>
@@ -626,12 +662,15 @@
     
     <div class="photo-overlay"></div>
     
+    <!-- ===== YOUR MUSIC FROM GITHUB ===== -->
     <audio id="partyMusic" loop preload="auto">
         <source src="./assets/music/party-song.mp3" type="audio/mpeg">
         <source src="./assets/music/party-song.ogg" type="audio/ogg">
+        <!-- Fallback message -->
         Your browser does not support the audio element.
     </audio>
     
+    <!-- Music Controls -->
     <div class="music-controls">
         <button class="music-btn" id="musicToggle" onclick="toggleMusic()">🎵</button>
         <div class="volume-control">
@@ -660,15 +699,15 @@
             <div class="party-details" onclick="detailsExplosion(event)">
                 <div class="detail-item-crazy">
                     <span class="detail-icon-crazy">🗓️</span>
-                    <span class="detail-text">Saturday, **[Your Date Here - e.g., July 20th]** - SAVE THE DATE!</span>
+                    <span class="detail-text">Saturday, July 19th - SAVE THE DATE!</span>
                 </div>
                 <div class="detail-item-crazy">
                     <span class="detail-icon-crazy">⏰</span>
-                    <span class="detail-text">**[Your Time Here - e.g., 7:00]** PM - Party O'Clock!</span>
+                    <span class="detail-text">3 PM - Party O'Clock!</span>
                 </div>
                 <div class="detail-item-crazy">
                     <span class="detail-icon-crazy">🏠</span>
-                    <span class="detail-text">My Epic Party Palace - **[Your Address Here]**</span>
+                    <span class="detail-text">My Epic Party Palace - Saket M Block (opp. Select City Walk)</span>
                 </div>
                 <div class="detail-item-crazy">
                     <span class="detail-icon-crazy">🎵</span>
@@ -683,7 +722,7 @@
             </div>
             
             <div class="contact-chaos" onclick="contactExplosion(event)">
-                💬 Hit me up: **[Your Phone Number Here]**
+                💬 Hit me up: 7827246985
             </div>
             
             <p class="final-message">
@@ -751,7 +790,7 @@
             document.getElementById(photos[index]).classList.add('active');
         }
         
-        // Music functions (initial play)
+        // Music functions
         function playMusic() {
             music.volume = 0.5; // Start at 50% volume
             music.play().then(() => {
@@ -793,19 +832,6 @@
             }, 3000);
         }
         
-        // Add message animation (ensure this is only added once)
-        if (!document.getElementById('messageSlideStyle')) {
-            const messageStyle = document.createElement('style');
-            messageStyle.id = 'messageSlideStyle'; // Add an ID to prevent duplicates
-            messageStyle.textContent = `
-                @keyframes messageSlide {
-                    from { opacity: 0; transform: translateX(-50%) translateY(-20px); }
-                    to { opacity: 1; transform: translateX(-50%) translateY(0); }
-                }
-            `;
-            document.head.appendChild(messageStyle);
-        }
-        
         // Ultimate chaos mode
         function triggerChaos() {
             createMegaFireworks();
@@ -835,125 +861,280 @@
         
         // Rainbow flash effect
         function startRainbowFlash() {
-            const overlay = document.querySelector('.photo-overlay');
-            overlay.style.animationDuration = '0.5s'; // Speed up for a flash
-            setTimeout(() => {
-                overlay.style.animationDuration = '6s'; // Revert to normal
-            }, 1000);
+            const body = document.body;
+            let flashCount = 0;
+            const flashInterval = setInterval(() => {
+                body.style.filter = flashCount % 2 === 0 ? 'hue-rotate(180deg) saturate(2)' : 'hue-rotate(0deg)';
+                flashCount++;
+                if (flashCount > 10) {
+                    clearInterval(flashInterval);
+                    body.style.filter = 'none';
+                }
+            }, 200);
         }
-
-        // Screen shake effect
+        
+        // Screen shake
         function shakeScreen() {
-            document.body.classList.add('shake');
+            const container = document.querySelector('.party-container');
+            container.style.animation = 'none';
             setTimeout(() => {
-                document.body.classList.remove('shake');
-            }, 500); // Shake for 0.5 seconds
+                container.style.animation = 'screenShake 0.5s ease-in-out';
+            }, 10);
         }
-
-        // Add shake animation to CSS dynamically if not present
-        const shakeStyle = document.createElement('style');
-        shakeStyle.textContent = `
-            @keyframes shake {
-                0%, 100% { transform: translateX(0); }
-                10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
-                20%, 40%, 60%, 80% { transform: translateX(10px); }
-            }
-            .shake {
-                animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
-                transform: translate3d(0, 0, 0);
-                backface-visibility: hidden;
-                perspective: 1000px;
-            }
-        `;
-        document.head.appendChild(shakeStyle);
-
-        // Play random sounds (requires sound files, assuming placeholder for now)
+        
+        // Random sound effects simulation
         function playRandomSounds() {
-            // Placeholder for sound effects
-            const soundEffects = [
-                './assets/sounds/party-horn.mp3', 
-                './assets/sounds/confetti.mp3', 
-                './assets/sounds/cheer.mp3'
-            ];
-            const randomSound = new Audio(soundEffects[Math.floor(Math.random() * soundEffects.length)]);
-            randomSound.volume = 0.7;
-            randomSound.play().catch(e => console.log("Sound play error:", e));
+            const soundEmojis = ['🔊', '🎵', '🎶', '💥', '🎺', '🥳'];
+            
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => {
+                    const soundElement = document.createElement('div');
+                    soundElement.textContent = soundEmojis[Math.floor(Math.random() * soundEmojis.length)];
+                    soundElement.style.cssText = `
+                        position: fixed;
+                        top: ${Math.random() * 100}%;
+                        left: ${Math.random() * 100}%;
+                        font-size: 3em;
+                        pointer-events: none;
+                        z-index: 2000;
+                        animation: soundBounce 1s ease-out forwards;
+                    `;
+                    
+                    document.body.appendChild(soundElement);
+                    setTimeout(() => soundElement.remove(), 1000);
+                }, i * 200);
+            }
         }
-
-        // Mini fireworks for individual elements
+        
+        // Mini fireworks around element  
         function createMiniFireworks(element) {
             const rect = element.getBoundingClientRect();
-            const fireworksContainer = document.getElementById('fireworks');
-            const colors = ['#FFC0CB', '#FFD700', '#ADFF2F', '#87CEEB', '#FF6347']; // Lighter, fun colors
-
-            for (let i = 0; i < 15; i++) {
-                const firework = document.createElement('div');
-                firework.className = 'firework';
-                firework.style.left = `${rect.left + rect.width / 2 + (Math.random() - 0.5) * 50}px`;
-                firework.style.top = `${rect.top + rect.height / 2 + (Math.random() - 0.5) * 50}px`;
-                firework.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                firework.style.animationDuration = (Math.random() * 0.8 + 0.7) + 's';
-                firework.style.animationDelay = Math.random() * 0.3 + 's';
-                fireworksContainer.appendChild(firework);
-                setTimeout(() => firework.remove(), 1500);
+            const colors = ['#ff6b6b', '#ffa500', '#4CAF50', '#2196F3', '#9C27B0'];
+            
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.style.cssText = `
+                    position: fixed;
+                    width: 6px;
+                    height: 6px;
+                    background: ${colors[Math.floor(Math.random() * colors.length)]};
+                    border-radius: 50%;
+                    pointer-events: none;
+                    z-index: 2000;
+                    left: ${rect.left + rect.width/2}px;
+                    top: ${rect.top + rect.height/2}px;
+                `;
+                
+                document.body.appendChild(particle);
+                
+                const angle = (Math.PI * 2 * i) / 20;
+                const velocity = 100 + Math.random() * 50;
+                const vx = Math.cos(angle) * velocity;
+                const vy = Math.sin(angle) * velocity;
+                
+                let x = rect.left + rect.width/2;
+                let y = rect.top + rect.height/2;
+                let opacity = 1;
+                
+                const animate = () => {
+                    x += vx * 0.02;
+                    y += vy * 0.02;
+                    opacity -= 0.02;
+                    
+                    particle.style.left = x + 'px';
+                    particle.style.top = y + 'px';
+                    particle.style.opacity = opacity;
+                    
+                    if (opacity > 0) {
+                        requestAnimationFrame(animate);
+                    } else {
+                        particle.remove();
+                    }
+                };
+                
+                requestAnimationFrame(animate);
             }
         }
-
-        // Event specific chaos functions
+        
+        // Emoji madness
         function emojiMadness(event) {
-            event.stopPropagation(); // Prevent card chaos
-            showPartyMessage("🤯 Emoji Overload! 🤪", "#673AB7");
-            createMiniFireworks(event.target);
-            // More emoji specific effects can be added here
+            event.stopPropagation();
+            const emoji = event.target;
+            const emojis = ['🚀', '💥', '🎉', '🔥', '⚡', '🌟', '💫', '🎊', '🎈', '🥳'];
+            let changeCount = 0;
+            
+            const emojiInterval = setInterval(() => {
+                emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                changeCount++;
+                if (changeCount > 15) {
+                    clearInterval(emojiInterval);
+                    emoji.textContent = '🚀';
+                }
+            }, 100);
+            
+            createMiniFireworks(emoji);
         }
-
+        
+        // Age explosion
         function ageExplosion(event) {
             event.stopPropagation();
-            showPartyMessage("🎉 Happy Birthday! 🎉", "#E91E63");
-            createMiniFireworks(event.target);
-            // Add a temporary, more intense age animation
-            event.target.style.animation = 'explosionSpin 0.3s linear 5, textPulse 0.3s linear 5';
+            const badge = event.target;
+            badge.style.transform = 'scale(1.5) rotate(720deg)';
+            badge.style.filter = 'hue-rotate(180deg)';
+            
             setTimeout(() => {
-                event.target.style.animation = 'explosionSpin 2s infinite, textPulse 1s infinite';
-            }, 1500);
+                badge.style.transform = 'scale(1)';
+                badge.style.filter = 'none';
+            }, 1000);
+            
+            createMiniFireworks(badge);
         }
-
+        
+        // Title madness
         function titleMadness(event) {
             event.stopPropagation();
-            showPartyMessage("✨ Let's Get This Party Started! ✨", "#FF5722");
-            createMiniFireworks(event.target);
+            const title = event.target;
+            const originalText = title.textContent;
+            const crazyTexts = ['PARTY TIME!', 'LET\'S GO WILD!', 'BIRTHDAY BASH!', 'GET READY!', 'PARTY ALERT!'];
+            
+            let textIndex = 0;
+            const textInterval = setInterval(() => {
+                title.textContent = crazyTexts[textIndex];
+                title.style.transform = `scale(${1 + Math.random() * 0.3}) rotate(${Math.random() * 10 - 5}deg)`;
+                textIndex = (textIndex + 1) % crazyTexts.length;
+            }, 200);
+            
+            setTimeout(() => {
+                clearInterval(textInterval);
+                title.textContent = originalText;
+                title.style.transform = 'scale(1) rotate(0deg)';
+            }, 3000);
         }
-
+        
+        // Details explosion
         function detailsExplosion(event) {
             event.stopPropagation();
-            showPartyMessage("👇 Party Deets! Don't Miss Out! 👇", "#00BCD4");
-            createMiniFireworks(event.target);
+            const details = event.target.closest('.party-details');
+            const icons = details.querySelectorAll('.detail-icon-crazy');
+            
+            icons.forEach((icon, index) => {
+                setTimeout(() => {
+                    icon.style.transform = 'scale(2) rotate(720deg)';
+                    icon.style.filter = 'hue-rotate(180deg)';
+                    
+                    setTimeout(() => {
+                        icon.style.transform = 'scale(1)';
+                        icon.style.filter = 'none';
+                    }, 800);
+                    
+                    createMiniFireworks(icon);
+                }, index * 300);
+            });
         }
-
-        function rsvpMadness(response) {
-            let message = "";
-            let color = "";
-            if (response === 'hell-yes') {
-                message = "🥳 WOOHOO! Can't wait! See you there! 🥳";
-                color = "#4CAF50";
-            } else if (response === 'maybe') {
-                message = "🤔 Hope to see you! Let me know! 🤔";
-                color = "#FFC107";
-            } else if (response === 'dance') {
-                message = "💃 Get ready to boogie! 🕺";
-                color = "#9C27B0";
-            }
-            showPartyMessage(message, color);
-            // Simulate RSVP action (e.g., send data to a backend)
-            console.log("RSVP response:", response);
-        }
-
+        
+        // Contact explosion
         function contactExplosion(event) {
             event.stopPropagation();
-            showPartyMessage("📞 Ring, Ring! Party Line! 📞", "#2196F3");
-            createMiniFireworks(event.target);
+            const contact = event.target;
+            
+            contact.style.animation = 'none';
+            setTimeout(() => {
+                contact.style.animation = 'phoneRing 0.5s ease-out, backgroundShift 1s infinite';
+                contact.style.transform = 'scale(1.2) rotate(360deg)';
+                setTimeout(() => {
+                    contact.style.transform = 'scale(1)';
+                }, 1000);
+            }, 10);
+            
+            createMegaFireworks();
         }
-
+        
+        // RSVP madness responses
+        function rsvpMadness(response) {
+            const responses = {
+                'hell-yes': {
+                    text: "🔥 YESSS! You're officially on the VIP list! 🔥",
+                    color: "linear-gradient(45deg, #ff6b6b, #ffa500)"
+                },
+                'maybe': {
+                    text: "🤔 Maybe means YES in party language! 🎉",
+                    color: "linear-gradient(45deg, #4ecdc4, #44a08d)"
+                },
+                'dance': {
+                    text: "💃 DANCE FLOOR LEGEND INCOMING! 🕺",
+                    color: "linear-gradient(45deg, #a8edea, #fed6e3)"
+                }
+            };
+            
+            const responseData = responses[response];
+            
+            const popup = document.createElement('div');
+            popup.innerHTML = responseData.text;
+            popup.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%) scale(0);
+                background: ${responseData.color};
+                color: white;
+                padding: 30px 40px;
+                border-radius: 25px;
+                font-weight: 700;
+                font-size: 1.5em;
+                z-index: 3000;
+                text-align: center;
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+                border: 3px solid rgba(255, 255, 255, 0.3);
+                animation: popupEntry 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+            `;
+            
+            document.body.appendChild(popup);
+            
+            triggerChaos();
+            
+            setTimeout(() => {
+                popup.style.animation = 'popupExit 0.5s ease-in forwards';
+                setTimeout(() => {
+                    popup.remove();
+                }, 500);
+            }, 4000);
+        }
+        
+        // Konami code for ultimate party mode
+        let konamiCode = [];
+        const konamiSequence = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'KeyB', 'KeyA'];
+        
+        document.addEventListener('keydown', function(e) {
+            konamiCode.push(e.code);
+            if (konamiCode.length > konamiSequence.length) {
+                konamiCode.shift();
+            }
+            
+            if (konamiCode.join(',') === konamiSequence.join(',')) {
+                ultimatePartyMode();
+                konamiCode = [];
+            }
+        });
+        
+        function ultimatePartyMode() {
+            showPartyMessage('🚨 ULTIMATE PARTY MODE ACTIVATED! 🚨', '#ff0080');
+            
+            for (let i = 0; i < 10; i++) {
+                setTimeout(() => triggerChaos(), i * 500);
+            }
+            
+            document.body.style.cursor = "url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"30\" height=\"30\"><text y=\"24\" font-size=\"24\">🥳</text></svg>'), auto";
+            
+            document.body.style.background = 'linear-gradient(45deg, #ff0080, #ff8c00, #40e0d0, #ff1493, #7fff00, #ff0080, #9400d3, #ff69b4)';
+            document.body.style.backgroundSize = '800% 800%';
+            document.body.style.animation = 'rainbowShift 0.5s ease infinite';
+            
+            if (music) {
+                music.volume = 1.0;
+                document.getElementById('volumeSlider').value = 100;
+            }
+        }
+        
         // Auto-start everything when page loads
         document.addEventListener('DOMContentLoaded', function() {
             // Start photo slideshow
