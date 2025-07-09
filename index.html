@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -70,7 +69,7 @@
             mix-blend-mode: overlay;
         }
 
-                /* Mobile Start Screen Overlay */
+        /* Mobile Start Screen Overlay */
         .mobile-start-overlay {
             position: fixed;
             top: 0;
@@ -107,6 +106,31 @@
             font-family: 'Fredoka One', cursive;
             text-transform: uppercase;
             letter-spacing: 2px;
+        }
+        
+        .start-party-message {
+            color: white;
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            text-align: center;
+            font-weight: 600;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .party-emoji-big {
+            font-size: 5em;
+            margin-bottom: 20px;
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes pulseBig {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
         }
         
         /* Music Controls */
@@ -688,13 +712,13 @@
     </style>
 </head>
 <body>
-
     <!-- Mobile Start Overlay -->
-<div class="mobile-start-overlay" id="mobileOverlay">
-    <div class="party-emoji-big">🎉</div>
-    <div class="start-party-message">Welcome to the Party!</div>
-    <button class="start-party-btn" onclick="startMobileParty()">TAP TO START THE PARTY! 🎵</button>
-</div>
+    <div class="mobile-start-overlay" id="mobileOverlay">
+        <div class="party-emoji-big">🎉</div>
+        <div class="start-party-message">Welcome to the Party!</div>
+        <button class="start-party-btn" onclick="startMobileParty()">TAP TO START THE PARTY! 🎵</button>
+    </div>
+    
     <!-- ===== YOUR PHOTOS FROM GITHUB ===== -->
     <div class="photo-background" id="photo1">
         <img src="./assets/images/photo1.jpg" alt="Party Photo 1">
@@ -1181,25 +1205,25 @@
             }
         }
         
-// Auto-start everything when page loads
-document.addEventListener('DOMContentLoaded', function() {
-    // Check if on mobile device
-    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-    
-    if (isMobile) {
-        // Show mobile overlay
-        document.getElementById('mobileOverlay').classList.add('show');
-    } else {
-        // Desktop: auto-start everything
-        startEverything();
-    }
-});
-
-// Function to start everything
-function startEverything() {
-    // Start photo slideshow
-    startPhotoSlideshow();
-    
+        // Auto-start everything when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if on mobile device
+            const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+            
+            if (isMobile) {
+                // Show mobile overlay
+                document.getElementById('mobileOverlay').classList.add('show');
+            } else {
+                // Desktop: auto-start everything
+                startEverything();
+            }
+        });
+        
+        // Function to start everything
+        function startEverything() {
+            // Start photo slideshow
+            startPhotoSlideshow();
+            
             // Auto-play music (with fallback for browser restrictions)
             setTimeout(() => {
                 playMusic();
@@ -1227,16 +1251,13 @@ function startEverything() {
             const overlay = document.getElementById('mobileOverlay');
             overlay.classList.remove('show');
             
-            // Start everything, including music
+            // Start everything including music
             startEverything();
             
             // Extra celebration for starting
             triggerChaos();
             showPartyMessage("🎉 LET'S PARTY! 🎉", "#ff1493");
-                    }
-                }
-            }, 3000);
-        });
+        }
     </script>
 </body>
 </html>
