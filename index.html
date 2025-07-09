@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎉 EPIC BIRTHDAY BASH ALERT! 🎉</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka+One:wght@400&family=Poppins:wght@300;400;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(45deg, rgba(255, 0, 128, 0.7), rgba(255, 140, 0, 0.7), rgba(64, 224, 208, 0.7), rgba(255, 20, 147, 0.7), rgba(127, 255, 0, 0.7));
+            background-size: 400% 400%;
+            animation: rainbowShift 5s ease infinite;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"><text y="16" font-size="16">🎉</text></svg>'), auto;
+            position: relative;
+        }
+        
+        /* === ADD YOUR PHOTOS HERE === */
+        .photo-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            opacity: 0;
+            transition: opacity 2s ease-in-out;
+        }
+        
+        .photo-background.active {
+            opacity: 0.4;
+        }
+        
+        .photo-background img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: blur(1px) brightness(0.8) saturate(1.3);
+        }
+        
+        .photo-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, 
+                rgba(255, 0, 128, 0.3), 
+                rgba(255, 140, 0, 0.3), 
+                rgba(64, 224, 208, 0.3), 
+                rgba(255, 20, 147, 0.3), 
+                rgba(127, 255, 0, 0.3));
+            background-size: 400% 400%;
+            animation: rainbowShift 6s ease infinite;
+            z-index: -1;
+            mix-blend-mode: overlay;
+        }
+        
+        /* Music Controls */
+        .music-controls {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 2000;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .music-btn {
+            background: linear-gradient(45deg, #ff6b6b, #ffa500);
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 1.8em;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            animation: musicPulse 2s infinite;
+        }
+        
+        .music-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .music-btn.paused {
+            background: linear-gradient(45deg, #666, #999);
+            animation: none;
+        }
+        
+        @keyframes musicPulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 10px 20px rgba(255, 107, 107, 0.3); }
+            50% { transform: scale(1.05); box-shadow: 0 15px 30px rgba(255, 107, 107, 0.6); }
+        }
+        
+        .volume-control {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .volume-slider {
+            width: 80px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 5px;
+            outline: none;
+            cursor: pointer;
+            appearance: none;
+        }
+        
+        .volume-slider::-webkit-slider-thumb {
+            appearance: none;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: #ff6b6b;
+            cursor: pointer;
+        }
+        
+        @keyframes rainbowShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .party-container {
+            width: 500px;
+            max-width: 95%;
+            position: relative;
+            transform-style: preserve-3d;
+        }
+        
+        .invitation-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 40px;
+            padding: 40px 35px;
+            text-align: center;
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.3), inset 0 0 50px rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+            animation: cardEntry 2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            transition: all 0.5s ease;
+        }
+        
+        .invitation-card:hover {
+            transform: rotateY(5deg) rotateX(5deg) scale(1.02);
+            box-shadow: 0 50px 100px rgba(0, 0, 0, 0.4);
+        }
+        
+        @keyframes cardEntry {
+            0% {
+                opacity: 0;
+                transform: scale(0.3) rotate(180deg);
+            }
+            50% {
+                transform: scale(1.1) rotate(0deg);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) rotate(0deg);
+            }
+        }
+        
+        .disco-lights {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(255, 0, 255, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0, 255, 255, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 20% 80%, rgba(255, 255, 0, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 0, 0, 0.3) 0%, transparent 50%);
+            animation: discoRotate 3s infinite;
+            pointer-events: none;
+        }
+        
+        @keyframes discoRotate {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.2); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+        
+        .crazy-emojis {
+            position: absolute;
+            font-size: 3em;
+            animation: emojiDance 4s infinite;
+            pointer-events: none;
+        }
+        
+        .emoji-1 { top: 10%; left: 10%; animation-delay: 0s; }
+        .emoji-2 { top: 15%; right: 10%; animation-delay: 1s; }
+        .emoji-3 { bottom: 20%; left: 15%; animation-delay: 2s; }
+        .emoji-4 { bottom: 15%; right: 15%; animation-delay: 3s; }
+        
+        @keyframes emojiDance {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            25% { transform: scale(1.2) rotate(90deg); }
+            50% { transform: scale(0.8) rotate(180deg); }
+            75% { transform: scale(1.1) rotate(270deg); }
+        }
+        
+        .main-emoji {
+            font-size: 6em;
+            margin-bottom: 20px;
+            animation: megaBounce 2s infinite;
+            cursor: pointer;
+            filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3));
+            transition: all 0.3s ease;
+        }
+        
+        .main-emoji:hover {
+            transform: scale(1.3) rotate(360deg);
+            filter: drop-shadow(0 20px 40px rgba(255, 0, 0, 0.5));
+        }
+        
+        @keyframes megaBounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0) scale(1); }
+            40% { transform: translateY(-30px) scale(1.1); }
+            60% { transform: translateY(-15px) scale(1.05); }
+        }
+        
+        .age-explosion {
+            display: inline-block;
+            font-family: 'Fredoka One', cursive;
+            background: linear-gradient(45deg, #ff6b6b, #ffa500, #ff1493, #00ff7f, #1e90ff);
+            background-size: 300% 300%;
+            animation: backgroundShift 2s infinite, textPulse 1s infinite;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 2em;
+            padding: 15px 30px;
+            border: 4px solid;
+            border-image: linear-gradient(45deg, #ff6b6b, #ffa500, #ff1493) 1;
+            border-radius: 25px;
+            margin-bottom: 25px;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .age-explosion::before {
+            content: '💥';
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            font-size: 1.5em;
+            animation: explosionSpin 2s infinite;
+        }
+        
+        @keyframes explosionSpin {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.2); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+        
+        @keyframes backgroundShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        @keyframes textPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .crazy-title {
+            font-family: 'Fredoka One', cursive;
+            font-size: 3.5em;
+            background: linear-gradient(45deg, #ff0080, #ff8c00, #40e0d0, #ff1493, #7fff00, #ff0080);
+            background-size: 400% 400%;
+            animation: rainbowShift 3s ease infinite, titleBounce 2s ease-in-out infinite;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+            line-height: 1;
+            cursor: pointer;
+            transform-origin: center;
+            transition: all 0.3s ease;
+        }
+        
+        .crazy-title:hover {
+            animation: titleBounce 0.5s ease-in-out infinite, rainbowShift 0.5s ease infinite;
+            transform: scale(1.1);
+        }
+        
+        @keyframes titleBounce {
+            0%, 100% { transform: translateY(0) rotateZ(0deg); }
+            25% { transform: translateY(-10px) rotateZ(-2deg); }
+            75% { transform: translateY(-5px) rotateZ(2deg); }
+        }
+        
+        .subtitle-crazy {
+            font-size: 1.3em;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            margin-bottom: 30px;
+            font-weight: 600;
+            animation: subtitleGlow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes subtitleGlow {
+            from { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), 0 0 10px rgba(255, 255, 255, 0.3); }
+            to { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 255, 255, 0.7); }
+        }
+        
+        .party-details {
+            background: linear-gradient(135deg, 
+                rgba(255, 0, 128, 0.9) 0%, 
+                rgba(255, 140, 0, 0.9) 25%, 
+                rgba(64, 224, 208, 0.9) 50%, 
+                rgba(255, 20, 147, 0.9) 75%, 
+                rgba(127, 255, 0, 0.9) 100%);
+            background-size: 400% 400%;
+            animation: rainbowShift 4s ease infinite;
+            padding: 35px;
+            border-radius: 30px;
+            margin: 30px 0;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .party-details:hover {
+            transform: scale(1.05) rotateZ(1deg);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .party-details::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            animation: detailsShimmer 3s infinite;
+        }
+        
+        @keyframes detailsShimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+        
+        .detail-item-crazy {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            font-size: 1.2em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 10px;
+            border-radius: 15px;
+        }
+        
+        .detail-item-crazy:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(10px) scale(1.05);
+        }
+        
+        .detail-item-crazy:last-child {
+            margin-bottom: 0;
+        }
+        
+        .detail-icon-crazy {
+            font-size: 2em;
+            animation: iconMadness 3s infinite;
+        }
+        
+        .detail-item-crazy:nth-child(1) .detail-icon-crazy { animation-delay: 0s; }
+        .detail-item-crazy:nth-child(2) .detail-icon-crazy { animation-delay: 0.5s; }
+        .detail-item-crazy:nth-child(3) .detail-icon-crazy { animation-delay: 1s; }
+        .detail-item-crazy:nth-child(4) .detail-icon-crazy { animation-delay: 1.5s; }
+        
+        @keyframes iconMadness {
+            0%, 90%, 100% { transform: scale(1) rotate(0deg); }
+            10% { transform: scale(1.3) rotate(10deg); }
+            20% { transform: scale(0.9) rotate(-10deg); }
+            30% { transform: scale(1.2) rotate(5deg); }
+            40% { transform: scale(1) rotate(0deg); }
+        }
+        
+        .rsvp-madness {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        
+        .btn-crazy {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-hell-yes {
+            background: linear-gradient(45deg, #ff6b6b, #ffa500);
+            color: white;
+        }
+        
+        .btn-maybe-party {
+            background: linear-gradient(45deg, #4ecdc4, #44a08d);
+            color: white;
+        }
+        
+        .btn-dance-floor {
+            background: linear-gradient(45deg, #a8edea, #fed6e3);
+            color: #333;
+        }
+        
+        .btn-crazy:hover {
+            transform: translateY(-10px) scale(1.1) rotate(5deg);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .btn-crazy:active {
+            transform: translateY(-5px) scale(1.05);
+        }
+        
+        .btn-crazy::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.5s;
+        }
+        
+        .btn-crazy:hover::before {
+            left: 100%;
+        }
+        
+        .contact-chaos {
+            background: linear-gradient(45deg, #667eea, #764ba2, #f093fb, #f5576c);
+            background-size: 300% 300%;
+            animation: backgroundShift 3s infinite;
+            color: white;
+            padding: 20px 35px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 1.2em;
+            display: inline-block;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            position: relative;
+        }
+        
+        .contact-chaos:hover {
+            transform: scale(1.1) rotate(-2deg);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .contact-chaos::after {
+            content: '📱💥';
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            font-size: 1.5em;
+            animation: phoneRing 2s infinite;
+        }
+        
+        @keyframes phoneRing {
+            0%, 90%, 100% { transform: rotate(0deg); }
+            10%, 30%, 50%, 70% { transform: rotate(-10deg); }
+            20%, 40%, 60%, 80% { transform: rotate(10deg); }
+        }
+        
+        .final-message {
+            font-size: 1.2em;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            margin-top: 30px;
+            font-weight: 600;
+            animation: finalGlow 3s ease-in-out infinite alternate;
+            line-height: 1.4;
+        }
+        
+        @keyframes finalGlow {
+            from { 
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), 0 0 10px rgba(255, 255, 255, 0.3);
+                transform: scale(1);
+            }
+            to { 
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), 0 0 25px rgba(255, 255, 255, 0.8);
+                transform: scale(1.02);
+            }
+        }
+        
+        .fireworks {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+        }
+        
+        .firework {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            animation: fireworkExplode 2s ease-out infinite;
+        }
+        
+        @keyframes fireworkExplode {
+            0% {
+                transform: scale(0);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(2);
+                opacity: 0;
+            }
+        }
+        
+        .rainbow-border {
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            background: linear-gradient(45deg, #ff0080, #ff8c00, #40e0d0, #ff1493, #7fff00, #ff0080);
+            background-size: 400% 400%;
+            animation: rainbowShift 3s ease infinite;
+            border-radius: 45px;
+            z-index: -1;
+        }
+        
+        @media (max-width: 480px) {
+            .party-container {
+                width: 100%;
+            }
+            
+            .invitation-card {
+                padding: 30px 20px;
+            }
+            
+            .crazy-title {
+                font-size: 2.5em;
+            }
+            
+            .main-emoji {
+                font-size: 4em;
+            }
+            
+            .rsvp-madness {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn-crazy {
+                width: 90%;
+            }
+            
+            .music-controls {
+                top: 10px;
+                right: 10px;
+                scale: 0.8;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="photo-background" id="photo1">
+        <img src="./assets/images/photo1.jpg" alt="Party Photo 1">
+    </div>
+    <div class="photo-background" id="photo2">
+        <img src="./assets/images/photo2.jpg" alt="Party Photo 2">
+    </div>
+    <div class="photo-background" id="photo3">
+        <img src="./assets/images/photo3.jpg" alt="Party Photo 3">
+    </div>
+    
+    <div class="photo-overlay"></div>
+    
+    <audio id="partyMusic" loop preload="auto">
+        <source src="./assets/music/party-song.mp3" type="audio/mpeg">
+        <source src="./assets/music/party-song.ogg" type="audio/ogg">
+        Your browser does not support the audio element.
+    </audio>
+    
+    <div class="music-controls">
+        <button class="music-btn" id="musicToggle" onclick="toggleMusic()">🎵</button>
+        <div class="volume-control">
+            <span style="color: white; font-size: 1.2em;">🔊</span>
+            <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="50" onchange="changeVolume()">
+        </div>
+    </div>
+    
+    <div class="party-container">
+        <div class="invitation-card" onclick="triggerChaos()">
+            <div class="rainbow-border"></div>
+            <div class="disco-lights"></div>
+            
+            <div class="crazy-emojis emoji-1">🎈</div>
+            <div class="crazy-emojis emoji-2">🎊</div>
+            <div class="crazy-emojis emoji-3">🥳</div>
+            <div class="crazy-emojis emoji-4">🎁</div>
+            
+            <div class="main-emoji" onclick="emojiMadness(event)">🚀</div>
+            
+            <div class="age-explosion" onclick="ageExplosion(event)">TURNING 24! 💥</div>
+            
+            <h1 class="crazy-title" onclick="titleMadness(event)">PARTY ALERT!</h1>
+            <p class="subtitle-crazy">Get ready for the most EPIC celebration of the year!</p>
+            
+            <div class="party-details" onclick="detailsExplosion(event)">
+                <div class="detail-item-crazy">
+                    <span class="detail-icon-crazy">🗓️</span>
+                    <span class="detail-text">Saturday, **[Your Date Here - e.g., July 20th]** - SAVE THE DATE!</span>
+                </div>
+                <div class="detail-item-crazy">
+                    <span class="detail-icon-crazy">⏰</span>
+                    <span class="detail-text">**[Your Time Here - e.g., 7:00]** PM - Party O'Clock!</span>
+                </div>
+                <div class="detail-item-crazy">
+                    <span class="detail-icon-crazy">🏠</span>
+                    <span class="detail-text">My Epic Party Palace - **[Your Address Here]**</span>
+                </div>
+                <div class="detail-item-crazy">
+                    <span class="detail-icon-crazy">🎵</span>
+                    <span class="detail-text">Banging Music & Wild Dancing!</span>
+                </div>
+            </div>
+            
+            <div class="rsvp-madness">
+                <button class="btn-crazy btn-hell-yes" onclick="rsvpMadness('hell-yes')">HELL YES! 🔥</button>
+                <button class="btn-crazy btn-maybe-party" onclick="rsvpMadness('maybe')">Maybe... 🤔</button>
+                <button class="btn-crazy btn-dance-floor" onclick="rsvpMadness('dance')">I'M DANCING! 💃</button>
+            </div>
+            
+            <div class="contact-chaos" onclick="contactExplosion(event)">
+                💬 Hit me up: **[Your Phone Number Here]**
+            </div>
+            
+            <p class="final-message">
+                Bring your party spirit, dancing shoes, and prepare for MADNESS! 
+                <br>Warning: This party may cause excessive fun and uncontrollable dancing! 🕺💃✨
+            </p>
+        </div>
+    </div>
+    
+    <div class="fireworks" id="fireworks"></div>
+    
+    <script>
+        // Photo slideshow variables
+        let currentPhotoIndex = 0;
+        const photos = ['photo1', 'photo2', 'photo3']; // IDs of your photo divs
+        let photoInterval;
+        
+        // Music variables
+        let music = document.getElementById('partyMusic');
+        let isPlaying = false;
+        
+        // Music control functions
+        function toggleMusic() {
+            if (isPlaying) {
+                music.pause();
+                isPlaying = false;
+            } else {
+                music.play().then(() => {
+                    isPlaying = true;
+                }).catch(() => {
+                    showPartyMessage("🎵 Music needs user interaction to play! 🎵", "#ff6b6b");
+                });
+            }
+            updateMusicButton();
+        }
+        
+        function updateMusicButton() {
+            const btn = document.getElementById('musicToggle');
+            btn.textContent = isPlaying ? '⏸️' : '▶️';
+            btn.className = isPlaying ? 'music-btn' : 'music-btn paused';
+        }
+        
+        function changeVolume() {
+            const volume = document.getElementById('volumeSlider').value / 100;
+            music.volume = volume;
+        }
+        
+        // Photo slideshow functions
+        function startPhotoSlideshow() {
+            showPhoto(0);
+            
+            photoInterval = setInterval(() => {
+                currentPhotoIndex = (currentPhotoIndex + 1) % photos.length;
+                showPhoto(currentPhotoIndex);
+            }, 4000); // Change photo every 4 seconds
+        }
+        
+        function showPhoto(index) {
+            // Hide all photos
+            photos.forEach(photoId => {
+                document.getElementById(photoId).classList.remove('active');
+            });
+            
+            // Show current photo
+            document.getElementById(photos[index]).classList.add('active');
+        }
+        
+        // Music functions (initial play)
+        function playMusic() {
+            music.volume = 0.5; // Start at 50% volume
+            music.play().then(() => {
+                isPlaying = true;
+                updateMusicButton();
+                showPartyMessage("🎵 Party music is ON! 🎵", "#9C27B0");
+            }).catch(() => {
+                // Auto-play blocked, show instruction
+                showPartyMessage("🎵 Click the music button to start the party! 🎵", "#FF9800");
+            });
+        }
+        
+        // Party message system
+        function showPartyMessage(text, color) {
+            const message = document.createElement('div');
+            message.textContent = text;
+            message.style.cssText = `
+                position: fixed;
+                top: 120px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: ${color};
+                color: white;
+                padding: 15px 25px;
+                border-radius: 25px;
+                font-weight: 600;
+                font-size: 1.1em;
+                z-index: 4000;
+                animation: messageSlide 0.5s ease-out;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+                border: 2px solid rgba(255, 255, 255, 0.3);
+            `;
+            
+            document.body.appendChild(message);
+            
+            setTimeout(() => {
+                message.style.animation = 'messageSlide 0.5s ease-out reverse';
+                setTimeout(() => message.remove(), 500);
+            }, 3000);
+        }
+        
+        // Add message animation (ensure this is only added once)
+        if (!document.getElementById('messageSlideStyle')) {
+            const messageStyle = document.createElement('style');
+            messageStyle.id = 'messageSlideStyle'; // Add an ID to prevent duplicates
+            messageStyle.textContent = `
+                @keyframes messageSlide {
+                    from { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+                    to { opacity: 1; transform: translateX(-50%) translateY(0); }
+                }
+            `;
+            document.head.appendChild(messageStyle);
+        }
+        
+        // Ultimate chaos mode
+        function triggerChaos() {
+            createMegaFireworks();
+            startRainbowFlash();
+            shakeScreen();
+            playRandomSounds();
+        }
+        
+        // Mega fireworks explosion
+        function createMegaFireworks() {
+            const fireworks = document.getElementById('fireworks');
+            const colors = ['#ff0080', '#ff8c00', '#40e0d0', '#ff1493', '#7fff00', '#ffa500', '#ff6b6b'];
+            
+            for (let i = 0; i < 100; i++) {
+                const firework = document.createElement('div');
+                firework.className = 'firework';
+                firework.style.left = Math.random() * 100 + '%';
+                firework.style.top = Math.random() * 100 + '%';
+                firework.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                firework.style.animationDelay = Math.random() * 2 + 's';
+                firework.style.animationDuration = (Math.random() * 1 + 1.5) + 's';
+                fireworks.appendChild(firework);
+                
+                setTimeout(() => firework.remove(), 4000);
+            }
+        }
+        
+        // Rainbow flash effect
+        function startRainbowFlash() {
+            const overlay = document.querySelector('.photo-overlay');
+            overlay.style.animationDuration = '0.5s'; // Speed up for a flash
+            setTimeout(() => {
+                overlay.style.animationDuration = '6s'; // Revert to normal
+            }, 1000);
+        }
+
+        // Screen shake effect
+        function shakeScreen() {
+            document.body.classList.add('shake');
+            setTimeout(() => {
+                document.body.classList.remove('shake');
+            }, 500); // Shake for 0.5 seconds
+        }
+
+        // Add shake animation to CSS dynamically if not present
+        const shakeStyle = document.createElement('style');
+        shakeStyle.textContent = `
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
+                20%, 40%, 60%, 80% { transform: translateX(10px); }
+            }
+            .shake {
+                animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+                transform: translate3d(0, 0, 0);
+                backface-visibility: hidden;
+                perspective: 1000px;
+            }
+        `;
+        document.head.appendChild(shakeStyle);
+
+        // Play random sounds (requires sound files, assuming placeholder for now)
+        function playRandomSounds() {
+            // Placeholder for sound effects
+            const soundEffects = [
+                './assets/sounds/party-horn.mp3', 
+                './assets/sounds/confetti.mp3', 
+                './assets/sounds/cheer.mp3'
+            ];
+            const randomSound = new Audio(soundEffects[Math.floor(Math.random() * soundEffects.length)]);
+            randomSound.volume = 0.7;
+            randomSound.play().catch(e => console.log("Sound play error:", e));
+        }
+
+        // Mini fireworks for individual elements
+        function createMiniFireworks(element) {
+            const rect = element.getBoundingClientRect();
+            const fireworksContainer = document.getElementById('fireworks');
+            const colors = ['#FFC0CB', '#FFD700', '#ADFF2F', '#87CEEB', '#FF6347']; // Lighter, fun colors
+
+            for (let i = 0; i < 15; i++) {
+                const firework = document.createElement('div');
+                firework.className = 'firework';
+                firework.style.left = `${rect.left + rect.width / 2 + (Math.random() - 0.5) * 50}px`;
+                firework.style.top = `${rect.top + rect.height / 2 + (Math.random() - 0.5) * 50}px`;
+                firework.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                firework.style.animationDuration = (Math.random() * 0.8 + 0.7) + 's';
+                firework.style.animationDelay = Math.random() * 0.3 + 's';
+                fireworksContainer.appendChild(firework);
+                setTimeout(() => firework.remove(), 1500);
+            }
+        }
+
+        // Event specific chaos functions
+        function emojiMadness(event) {
+            event.stopPropagation(); // Prevent card chaos
+            showPartyMessage("🤯 Emoji Overload! 🤪", "#673AB7");
+            createMiniFireworks(event.target);
+            // More emoji specific effects can be added here
+        }
+
+        function ageExplosion(event) {
+            event.stopPropagation();
+            showPartyMessage("🎉 Happy Birthday! 🎉", "#E91E63");
+            createMiniFireworks(event.target);
+            // Add a temporary, more intense age animation
+            event.target.style.animation = 'explosionSpin 0.3s linear 5, textPulse 0.3s linear 5';
+            setTimeout(() => {
+                event.target.style.animation = 'explosionSpin 2s infinite, textPulse 1s infinite';
+            }, 1500);
+        }
+
+        function titleMadness(event) {
+            event.stopPropagation();
+            showPartyMessage("✨ Let's Get This Party Started! ✨", "#FF5722");
+            createMiniFireworks(event.target);
+        }
+
+        function detailsExplosion(event) {
+            event.stopPropagation();
+            showPartyMessage("👇 Party Deets! Don't Miss Out! 👇", "#00BCD4");
+            createMiniFireworks(event.target);
+        }
+
+        function rsvpMadness(response) {
+            let message = "";
+            let color = "";
+            if (response === 'hell-yes') {
+                message = "🥳 WOOHOO! Can't wait! See you there! 🥳";
+                color = "#4CAF50";
+            } else if (response === 'maybe') {
+                message = "🤔 Hope to see you! Let me know! 🤔";
+                color = "#FFC107";
+            } else if (response === 'dance') {
+                message = "💃 Get ready to boogie! 🕺";
+                color = "#9C27B0";
+            }
+            showPartyMessage(message, color);
+            // Simulate RSVP action (e.g., send data to a backend)
+            console.log("RSVP response:", response);
+        }
+
+        function contactExplosion(event) {
+            event.stopPropagation();
+            showPartyMessage("📞 Ring, Ring! Party Line! 📞", "#2196F3");
+            createMiniFireworks(event.target);
+        }
+
+        // Auto-start everything when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Start photo slideshow
+            startPhotoSlideshow();
+            
+            // Auto-play music (with fallback for browser restrictions)
+            setTimeout(() => {
+                playMusic();
+            }, 1000);
+            
+            // Start some gentle chaos
+            setTimeout(() => {
+                createMegaFireworks();
+            }, 2000);
+            
+            // Random effects
+            setInterval(() => {
+                if (Math.random() > 0.8) {
+                    const randomEmoji = document.querySelector('.crazy-emojis');
+                    if (randomEmoji) {
+                        createMiniFireworks(randomEmoji);
+                    }
+                }
+            }, 3000);
+        });
+    </script>
+</body>
+</html>
